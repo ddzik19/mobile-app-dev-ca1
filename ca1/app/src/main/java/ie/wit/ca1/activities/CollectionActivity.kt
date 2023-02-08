@@ -5,11 +5,14 @@ import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import ie.wit.ca1.R
 import ie.wit.ca1.databinding.CollectionActivityBinding
+import ie.wit.ca1.models.CollectionModel
 import timber.log.Timber
 import timber.log.Timber.i
 
 class CollectionActivity : AppCompatActivity() {
     private lateinit var binding: CollectionActivityBinding
+    var collection = CollectionModel()
+    var collections = ArrayList<CollectionModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection_activity)
@@ -21,9 +24,11 @@ class CollectionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.addBtn.setOnClickListener {
-            val collectionTitle = binding.titleInput.text.toString()
-            if (collectionTitle.isNotEmpty()) {
-                i("add Button Pressed: $collectionTitle")
+             collection.title = binding.titleInput.text.toString()
+            if (collection.title.isNotEmpty()) {
+                collections.add(collection)
+                i("Added new collection; $collection")
+
             }
             else {
                 Snackbar
