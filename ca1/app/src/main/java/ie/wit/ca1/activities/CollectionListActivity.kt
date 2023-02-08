@@ -3,6 +3,7 @@ package ie.wit.ca1.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import ie.wit.ca1.R
@@ -19,16 +20,21 @@ class CollectionListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.collection_list_activity)
-
         binding = CollectionListActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.toolbar.title = title
+        setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = CollectionAdapter(app.collections)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
 
@@ -40,6 +46,7 @@ class CollectionAdapter constructor(private var collections: List<CollectionMode
             .inflate(LayoutInflater.from(parent.context), parent, false)
 
         return MainHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
@@ -52,8 +59,8 @@ class CollectionAdapter constructor(private var collections: List<CollectionMode
     class MainHolder(private val binding : CollectionWidgetBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(placemark: CollectionModel) {
-            binding.collectionTitle.text = placemark.title
+        fun bind(collection: CollectionModel) {
+            binding.collectionTitle.text = collection.title
         }
     }
 }

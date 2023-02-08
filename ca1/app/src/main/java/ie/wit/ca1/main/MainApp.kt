@@ -11,9 +11,6 @@ class MainApp: Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         i("Collection App started")
-
-        collections.add(CollectionModel("test 1"))
-        collections.add(CollectionModel("test 2"))
-        collections.add(CollectionModel("test 3"))
+        collections.add(CollectionModel("test 1", cards = ArrayList()))
     }
 }
