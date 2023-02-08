@@ -26,9 +26,8 @@ class CollectionActivity : AppCompatActivity() {
         binding.addBtn.setOnClickListener {
              collection.title = binding.titleInput.text.toString()
             if (collection.title.isNotEmpty()) {
-                collections.add(collection)
+                collections.add(collection.copy())
                 i("Added new collection; $collection")
-
             }
             else {
                 Snackbar
