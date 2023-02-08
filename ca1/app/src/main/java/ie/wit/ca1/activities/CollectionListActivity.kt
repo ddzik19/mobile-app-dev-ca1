@@ -1,10 +1,14 @@
 package ie.wit.ca1.activities
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import ie.wit.ca1.R
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +40,27 @@ class CollectionListActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_add -> {
+                val launcherIntent = Intent(this, CollectionActivity::class.java)
+                getResult.launch(launcherIntent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private val getResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.collections.size)
+            }
+        }
+
 }
 
 class CollectionAdapter constructor(private var collections: List<CollectionModel>) :

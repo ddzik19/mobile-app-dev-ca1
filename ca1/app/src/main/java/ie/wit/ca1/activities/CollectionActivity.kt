@@ -30,6 +30,8 @@ class CollectionActivity : AppCompatActivity() {
             if (collection.title.isNotEmpty()) {
                 app.collections.add(collection.copy())
                 i("Added new collection; $collection")
+                setResult(RESULT_OK)
+                finish()
             }
             else {
                 Snackbar

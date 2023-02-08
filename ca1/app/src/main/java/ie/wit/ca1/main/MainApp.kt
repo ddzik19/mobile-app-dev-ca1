@@ -11,6 +11,5 @@ class MainApp: Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         i("Collection App started")
-        collections.add(CollectionModel("test 1", cards = ArrayList()))
     }
 }
