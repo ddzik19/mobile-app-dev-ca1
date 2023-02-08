@@ -2,6 +2,7 @@ package ie.wit.ca1.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.android.material.snackbar.Snackbar
 import ie.wit.ca1.R
 import ie.wit.ca1.databinding.CollectionActivityBinding
 import timber.log.Timber
@@ -19,8 +20,16 @@ class CollectionActivity : AppCompatActivity() {
         binding = CollectionActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.addBtn.setOnClickListener() {
-            i("add Button Pressed")
+        binding.addBtn.setOnClickListener {
+            val collectionTitle = binding.titleInput.text.toString()
+            if (collectionTitle.isNotEmpty()) {
+                i("add Button Pressed: $collectionTitle")
+            }
+            else {
+                Snackbar
+                    .make(it,"Please Enter a title for the collection :)", Snackbar.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 }
