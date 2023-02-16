@@ -61,6 +61,7 @@ class CollectionListActivity : AppCompatActivity() {
             }
         }
 
+
 }
 
 class CollectionAdapter constructor(private var collections: List<CollectionModel>) :
@@ -81,11 +82,13 @@ class CollectionAdapter constructor(private var collections: List<CollectionMode
 
     override fun getItemCount(): Int = collections.size
 
+    // setting the information to be displayed
     class MainHolder(private val binding : CollectionWidgetBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(collection: CollectionModel) {
             binding.collectionTitle.text = collection.title
+            binding.genreText.text = collection.genre
         }
     }
 }

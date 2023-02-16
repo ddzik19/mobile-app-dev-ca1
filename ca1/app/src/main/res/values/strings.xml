@@ -3,4 +3,11 @@
     <string name="ca1" />
     <string name="add_btn_text">Add</string>
     <string name="menu_addCollection">Add</string>
+    <string-array name="genres">
+        <item>Pokemon</item>
+        <item>Yu-Gi-Oh</item>
+        <item>Match Attax</item>
+        <item>Fortnite</item>
+        <item>Minecraft</item>
+    </string-array>
 </resources>
