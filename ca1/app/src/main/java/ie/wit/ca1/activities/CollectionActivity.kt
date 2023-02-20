@@ -46,7 +46,7 @@ class CollectionActivity : AppCompatActivity() {
             collection.genre = binding.genreSpinner.selectedItem.toString()
 
             if (collection.title.isNotEmpty() && collection.title.isNotEmpty()) {
-                app.collections.add(collection.copy())
+                app.collections.create(collection.copy())
                 i("Added new collection; $collection")
                 setResult(RESULT_OK)
                 finish()

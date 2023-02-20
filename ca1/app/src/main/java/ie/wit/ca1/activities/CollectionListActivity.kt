@@ -33,7 +33,7 @@ class CollectionListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = CollectionAdapter(app.collections)
+        binding.recyclerView.adapter = CollectionAdapter(app.collections.findAll())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,7 +57,7 @@ class CollectionListActivity : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.collections.size)
+                notifyItemRangeChanged(0,app.collections.findAll().size)
             }
         }
 
