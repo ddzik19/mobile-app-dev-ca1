@@ -3,6 +3,8 @@
     <string name="ca1" />
     <string name="add_btn_text">Add</string>
     <string name="menu_addCollection">Add</string>
+    <string name="edit_btn_text">Edit</string>
+    <string name="delete_btn_text">Delete</string>
     <string-array name="genres">
         <item>Pokemon</item>
         <item>Yu-Gi-Oh</item>

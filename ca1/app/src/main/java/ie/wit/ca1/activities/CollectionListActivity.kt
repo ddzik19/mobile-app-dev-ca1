@@ -17,7 +17,7 @@ import ie.wit.ca1.databinding.CollectionWidgetBinding
 import ie.wit.ca1.main.MainApp
 import ie.wit.ca1.models.CollectionModel
 
-class CollectionListActivity : AppCompatActivity() {
+class CollectionListActivity : AppCompatActivity(),CollectionListener {
 
     lateinit var app: MainApp
     private lateinit var binding: CollectionListActivityBinding
@@ -33,7 +33,7 @@ class CollectionListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = CollectionAdapter(app.collections.findAll())
+        binding.recyclerView.adapter = CollectionAdapter(app.collections.findAll(),this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -61,10 +61,29 @@ class CollectionListActivity : AppCompatActivity() {
             }
         }
 
+    override fun onCollectionHold(collection: CollectionModel) {
+        val launcherIntent = Intent(this, CollectionActivity::class.java)
+        launcherIntent.putExtra("edit_collection", collection)
+        getHoldResult.launch(launcherIntent)
+    }
 
+    private val getHoldResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.collections.findAll().size)
+            }
+        }
 }
 
-class CollectionAdapter constructor(private var collections: List<CollectionModel>) :
+// responsible for holding on collections
+interface CollectionListener {
+    fun onCollectionHold(collection: CollectionModel)
+}
+
+class CollectionAdapter constructor(private var collections: List<CollectionModel>, private val listener: CollectionListener) :
     RecyclerView.Adapter<CollectionAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -72,12 +91,11 @@ class CollectionAdapter constructor(private var collections: List<CollectionMode
             .inflate(LayoutInflater.from(parent.context), parent, false)
 
         return MainHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val collection = collections[holder.adapterPosition]
-        holder.bind(collection)
+        holder.bind(collection,listener)
     }
 
     override fun getItemCount(): Int = collections.size
@@ -86,9 +104,10 @@ class CollectionAdapter constructor(private var collections: List<CollectionMode
     class MainHolder(private val binding : CollectionWidgetBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(collection: CollectionModel) {
+        fun bind(collection: CollectionModel, holdListener: CollectionListener) {
             binding.collectionTitle.text = collection.title
             binding.genreText.text = collection.genre
+            binding.root.setOnClickListener{holdListener.onCollectionHold(collection)}
         }
     }
 }

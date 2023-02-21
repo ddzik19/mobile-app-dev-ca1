@@ -28,7 +28,6 @@ class CollectionActivity : AppCompatActivity() {
         binding = CollectionActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         // https://code.tutsplus.com/tutorials/how-to-add-a-dropdown-menu-in-android-studio--cms-37860
         // here i found steps on how to implement the spinner but now how to retrieve information from it.
         val genreSpinner = findViewById<Spinner>(ie.wit.ca1.R.id.genreSpinner)
@@ -40,6 +39,12 @@ class CollectionActivity : AppCompatActivity() {
             )
         adapter.setDropDownViewResource(R.layout.simple_spinner_item)
         genreSpinner.adapter = adapter;
+
+        if (intent.hasExtra("edit_collection")) {
+            collection = intent.extras?.getParcelable("edit_collection")!!
+            binding.titleInput.setText(collection.title)
+
+        }
 
         binding.addBtn.setOnClickListener {
             collection.title = binding.titleInput.text.toString()
