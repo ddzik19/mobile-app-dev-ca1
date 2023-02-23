@@ -9,22 +9,29 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Ca1"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Ca1">
+        <activity
+            android:name=".activities.EditCollectionActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.CollectionListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.lib_name"
+
+            <meta-data
+                android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".activities.CollectionActivity"
             android:exported="true">
-            <meta-data android:name="android.app.lib_name"
+            <meta-data
+                android:name="android.app.lib_name"
                 android:value="" />
         </activity>
     </application>

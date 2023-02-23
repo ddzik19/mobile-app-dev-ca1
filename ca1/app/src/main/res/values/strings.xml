@@ -5,6 +5,7 @@
     <string name="menu_addCollection">Add</string>
     <string name="edit_btn_text">Edit</string>
     <string name="delete_btn_text">Delete</string>
+    <string name="update_btn_text">Update</string>
     <string-array name="genres">
         <item>Pokemon</item>
         <item>Yu-Gi-Oh</item>

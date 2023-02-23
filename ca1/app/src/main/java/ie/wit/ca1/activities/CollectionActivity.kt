@@ -12,7 +12,6 @@ import ie.wit.ca1.models.CollectionModel
 import timber.log.Timber
 import timber.log.Timber.i
 
-
 class CollectionActivity : AppCompatActivity() {
     private lateinit var binding: CollectionActivityBinding
     var collection = CollectionModel()
@@ -43,7 +42,6 @@ class CollectionActivity : AppCompatActivity() {
         if (intent.hasExtra("edit_collection")) {
             collection = intent.extras?.getParcelable("edit_collection")!!
             binding.titleInput.setText(collection.title)
-
         }
 
         binding.addBtn.setOnClickListener {
@@ -65,5 +63,7 @@ class CollectionActivity : AppCompatActivity() {
                     .show()
             }
         }
+
+
     }
 }

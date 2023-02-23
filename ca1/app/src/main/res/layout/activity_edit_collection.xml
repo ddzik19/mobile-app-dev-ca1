@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ie.wit.ca1.activities.CollectionActivity">
+    tools:context="ie.wit.ca1.activities.EditCollectionActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -93,10 +93,9 @@
                     android:layout_width="108dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/add_btn_text" />
-
+                    android:text="@string/update_btn_text" />
             </LinearLayout>
         </ScrollView>
-
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
