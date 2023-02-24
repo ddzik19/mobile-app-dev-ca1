@@ -43,12 +43,17 @@ class EditCollectionActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         genreSpinner.adapter = adapter;
 
+        if (intent.hasExtra("edit_collection")) {
+            collection = intent.extras?.getParcelable("edit_collection")!!
+            binding.titleInput.setText(collection.title)
+        }
+
         binding.updateBtn.setOnClickListener {
             collection.title = binding.titleInput.text.toString()
             collection.genre = binding.genreSpinner.selectedItem.toString()
 
             if (collection.title.isNotEmpty() && collection.genre.isNotEmpty()) {
-                app.collections.update(collection.copy())
+                app.collections.update(collection)
                 i("Updated Collection; $collection")
                 setResult(RESULT_OK)
                 finish()

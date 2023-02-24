@@ -39,18 +39,13 @@ class CollectionActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(R.layout.simple_spinner_item)
         genreSpinner.adapter = adapter;
 
-        if (intent.hasExtra("edit_collection")) {
-            collection = intent.extras?.getParcelable("edit_collection")!!
-            binding.titleInput.setText(collection.title)
-        }
-
         binding.addBtn.setOnClickListener {
             collection.title = binding.titleInput.text.toString()
             collection.genre = binding.genreSpinner.selectedItem.toString()
 
             if (collection.title.isNotEmpty() && collection.genre.isNotEmpty()) {
                 app.collections.create(collection.copy())
-                i("Added new collection; $collection")
+                i("Added new collection; ${collection.copy()}")
                 setResult(RESULT_OK)
                 finish()
             } else {

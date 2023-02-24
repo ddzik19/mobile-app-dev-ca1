@@ -1,11 +1,12 @@
 package ie.wit.ca1.models
 
 import timber.log.Timber.i
+import kotlin.random.Random
 
-var prevId = 0L
+var id = 0
 
-internal fun getId(): Long {
-    return prevId++
+internal fun getNewId(): Int {
+    return id++
 }
 
 class CollectionMemStore: CollectionStore {
@@ -18,7 +19,9 @@ class CollectionMemStore: CollectionStore {
 
     // creating/adding new collections
     override fun create(collection: CollectionModel) {
+        collection.id = getNewId()
         collections.add(collection)
+        logCollections()
     }
 
     override fun update(collection: CollectionModel) {
@@ -33,7 +36,7 @@ class CollectionMemStore: CollectionStore {
     fun delete(collection: CollectionModel) {
         var foundCollection =  collections.indexOf(collection)
         if (foundCollection != null) {
-            collections.drop(foundCollection)
+            collections.removeAt(foundCollection)
             logCollections()
         }
     }
