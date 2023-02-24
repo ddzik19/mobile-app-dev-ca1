@@ -67,12 +67,14 @@ class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListe
         getClickResult.launch(launcherIntent)
     }
 
+    // moves us to the edit activity for collection
     override fun onCollectionEditClick(collection: CollectionModel){
         val launcherIntent = Intent(this, EditCollectionActivity::class.java)
         launcherIntent.putExtra("edit_collection", collection)
         getClickResult.launch(launcherIntent)
     }
 
+    // checking if we can move to activity
     private val getClickResult =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -84,10 +86,11 @@ class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListe
         }
 }
 
-// responsible for holding on collections
+// edit button click
 interface EditListener {
     fun onCollectionEditClick(collection: CollectionModel)
 }
+// collection click
 interface CollectionListener {
     fun onCollectionClick(collection: CollectionModel)
 }
