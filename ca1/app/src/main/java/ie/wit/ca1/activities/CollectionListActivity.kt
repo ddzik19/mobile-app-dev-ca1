@@ -16,8 +16,9 @@ import ie.wit.ca1.databinding.CollectionListActivityBinding
 import ie.wit.ca1.databinding.CollectionWidgetBinding
 import ie.wit.ca1.main.MainApp
 import ie.wit.ca1.models.CollectionModel
+import ie.wit.ca1.models.CollectionStore
 
-class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListener {
+class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListener, DeleteListener {
 
     lateinit var app: MainApp
     private lateinit var binding: CollectionListActivityBinding
@@ -33,7 +34,7 @@ class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListe
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = CollectionAdapter(app.collections.findAll(),this,this)
+        binding.recyclerView.adapter = CollectionAdapter(app.collections.findAll(),this,this, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -74,6 +75,10 @@ class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListe
         getClickResult.launch(launcherIntent)
     }
 
+    override fun onCollectionDeleteClick(collection: CollectionModel){
+        app.collections.delete(collection)
+    }
+
     // checking if we can move to activity
     private val getClickResult =
         registerForActivityResult(
@@ -94,8 +99,12 @@ interface EditListener {
 interface CollectionListener {
     fun onCollectionClick(collection: CollectionModel)
 }
+// delete collection
+interface DeleteListener {
+    fun onCollectionDeleteClick(collection: CollectionModel)
+}
 
-class CollectionAdapter constructor(private var collections: List<CollectionModel>, private val listener: CollectionListener, private val editListener: EditListener) :
+class CollectionAdapter constructor(private var collections: List<CollectionModel>, private val listener: CollectionListener, private val editListener: EditListener, private val deleteListener: DeleteListener) :
     RecyclerView.Adapter<CollectionAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -107,7 +116,7 @@ class CollectionAdapter constructor(private var collections: List<CollectionMode
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val collection = collections[holder.adapterPosition]
-        holder.bind(collection,listener,editListener)
+        holder.bind(collection,listener,editListener, deleteListener)
     }
 
     override fun getItemCount(): Int = collections.size
@@ -116,11 +125,12 @@ class CollectionAdapter constructor(private var collections: List<CollectionMode
     class MainHolder(private val binding : CollectionWidgetBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(collection: CollectionModel, clickListener: CollectionListener, editListener: EditListener) {
+        fun bind(collection: CollectionModel, clickListener: CollectionListener, editListener: EditListener, deleteListener: DeleteListener) {
             binding.collectionTitle.text = collection.title
             binding.genreText.text = collection.genre
             binding.root.setOnClickListener{clickListener.onCollectionClick(collection)}
             binding.editBtn.setOnClickListener{editListener.onCollectionEditClick(collection)}
+            binding.deleteBtn.setOnClickListener{deleteListener.onCollectionDeleteClick(collection)}
         }
     }
 }

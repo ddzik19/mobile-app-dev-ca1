@@ -25,7 +25,7 @@ class EditCollectionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_collection)
 
         Timber.plant(Timber.DebugTree())
-        Timber.i("Edit Collection Activity started :)")
+        Timber.i("Edit Collection Activity Started :)")
 
         app = application as MainApp
         binding = ActivityEditCollectionBinding.inflate(layoutInflater)
@@ -47,16 +47,16 @@ class EditCollectionActivity : AppCompatActivity() {
             collection.title = binding.titleInput.text.toString()
             collection.genre = binding.genreSpinner.selectedItem.toString()
 
-            if (collection.title.isNotEmpty() && collection.title.isNotEmpty()) {
-                app.collections.create(collection.copy())
-                i("Added new collection; $collection")
+            if (collection.title.isNotEmpty() && collection.genre.isNotEmpty()) {
+                app.collections.update(collection.copy())
+                i("Updated Collection; $collection")
                 setResult(RESULT_OK)
                 finish()
             } else {
                 Snackbar
                     .make(
                         it,
-                        "Please Enter a title for the collection :)",
+                        "Please enter new title for the collection :)",
                         Snackbar.LENGTH_LONG
                     )
                     .show()
