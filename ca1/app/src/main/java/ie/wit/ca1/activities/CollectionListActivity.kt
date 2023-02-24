@@ -77,6 +77,8 @@ class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListe
 
     override fun onCollectionDeleteClick(collection: CollectionModel){
         app.collections.delete(collection)
+        val launcherIntent = Intent(this, CollectionListActivity::class.java)
+        getClickResult.launch(launcherIntent)
     }
 
     // checking if we can move to activity
