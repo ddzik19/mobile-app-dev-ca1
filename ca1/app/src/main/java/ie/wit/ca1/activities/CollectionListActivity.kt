@@ -16,7 +16,6 @@ import ie.wit.ca1.databinding.CollectionListActivityBinding
 import ie.wit.ca1.databinding.CollectionWidgetBinding
 import ie.wit.ca1.main.MainApp
 import ie.wit.ca1.models.CollectionModel
-import ie.wit.ca1.models.CollectionStore
 
 class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListener, DeleteListener {
 
@@ -45,7 +44,7 @@ class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListe
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
-                val launcherIntent = Intent(this, CollectionActivity::class.java)
+                val launcherIntent = Intent(this, CreateCollectionActivity::class.java)
                 getResult.launch(launcherIntent)
             }
         }
@@ -64,7 +63,7 @@ class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListe
 
     override fun onCollectionClick(collection: CollectionModel) {
         val launcherIntent = Intent(this, CollectionActivity::class.java)
-        launcherIntent.putExtra("collection_items", collection)
+        launcherIntent.putExtra("collection_activity", collection)
         getClickResult.launch(launcherIntent)
     }
 
