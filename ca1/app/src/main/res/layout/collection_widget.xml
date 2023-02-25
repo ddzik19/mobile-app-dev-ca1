@@ -23,14 +23,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/cardName"
+                    android:id="@+id/collectionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="30sp"
                     tools:text="A Title" />
 
                 <TextView
-                    android:id="@+id/cardNumber"
+                    android:id="@+id/genreText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView" />

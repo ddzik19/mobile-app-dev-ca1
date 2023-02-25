@@ -14,23 +14,24 @@ import ie.wit.ca1.models.CollectionModel
 import timber.log.Timber
 
 class CollectionActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityCollectionBinding
     var collection = CollectionModel()
     lateinit var app: MainApp
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_collection)
+        binding = ActivityCollectionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.collectionToolbar)
 
         Timber.plant(Timber.DebugTree())
         Timber.i("Collection Activity started :)")
 
         app = application as MainApp
-        binding = ActivityCollectionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         if (intent.hasExtra("collection_activity")) {
             collection = intent.extras?.getParcelable("collection_activity")!!
-
         }
     }
 
@@ -42,7 +43,7 @@ class CollectionActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
-                val launcherIntent = Intent(this, CreateCollectionActivity::class.java)
+                val launcherIntent = Intent(this, ""::class.java)
                 getResult.launch(launcherIntent)
             }
         }
