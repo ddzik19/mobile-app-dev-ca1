@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ca1">
         <activity
+            android:name=".AddCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CollectionActivity"
             android:exported="false" />
         <activity
