@@ -25,7 +25,7 @@ class EditCollectionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit_collection)
 
         Timber.plant(Timber.DebugTree())
-        Timber.i("Edit Collection Activity Started :)")
+        i("Edit Collection Activity Started :)")
 
         app = application as MainApp
         binding = ActivityEditCollectionBinding.inflate(layoutInflater)

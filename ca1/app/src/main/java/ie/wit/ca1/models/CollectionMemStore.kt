@@ -4,17 +4,31 @@ import timber.log.Timber.i
 import kotlin.random.Random
 
 var id = 0
-
+var cardId = 0
 internal fun getNewId(): Int {
-    return id++
+    return id ++
+}
+
+internal fun getNewCardId(): Int {
+    return cardId ++
 }
 
 class CollectionMemStore: CollectionStore {
     val collections = ArrayList<CollectionModel>()
-
+    var cards = ArrayList<CardModel>()
     // returning all collections
     override fun findAll(): List<CollectionModel> {
         return collections
+    }
+
+    // get all card from a specific collection
+    fun findAllCards(collection: CollectionModel): ArrayList<CardModel>? {
+        var foundCollection: CollectionModel? = collections.find { c -> c.id == collection.id }
+
+        if(foundCollection != null){
+            cards = foundCollection?.cards!!
+        }
+        return cards
     }
 
     // creating/adding new collections
@@ -41,6 +55,15 @@ class CollectionMemStore: CollectionStore {
         }
     }
 
+//    adding new card to the collection
+//    we find the collection using the id and then we add the card to the cards array
+    fun addCard(collection: CollectionModel, card: CardModel){
+        var foundCollection: CollectionModel? = collections.find { c -> c.id == collection.id }
+        if (foundCollection != null) {
+            foundCollection.cards.add(card)
+            logCollections()
+        }
+    }
     // logs collections when a new collection is created
     fun logCollections() {
         collections.forEach{ i("$it") }

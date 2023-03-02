@@ -9,5 +9,5 @@ data class CollectionModel(
     var id: Int = 0,
     var title: String = "",
     var genre: String = "",
-    var cards: ArrayList<String> = ArrayList()
+    var cards: ArrayList<CardModel> = ArrayList()
 ): Parcelable
