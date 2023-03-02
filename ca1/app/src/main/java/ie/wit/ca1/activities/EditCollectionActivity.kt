@@ -37,7 +37,7 @@ class EditCollectionActivity : AppCompatActivity() {
         val adapter =
             ArrayAdapter.createFromResource(
                 this,
-                ie.wit.ca1.R.array.genres,
+                R.array.genres,
                 android.R.layout.simple_spinner_item
             )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)

@@ -22,11 +22,10 @@ class CollectionMemStore: CollectionStore {
     }
 
     // get all card from a specific collection
-    fun findAllCards(collection: CollectionModel): ArrayList<CardModel>? {
+    override fun findAllCards(collection: CollectionModel): List<CardModel> {
         var foundCollection: CollectionModel? = collections.find { c -> c.id == collection.id }
-
         if(foundCollection != null){
-            cards = foundCollection?.cards!!
+            cards = foundCollection.cards
         }
         return cards
     }
@@ -57,15 +56,19 @@ class CollectionMemStore: CollectionStore {
 
 //    adding new card to the collection
 //    we find the collection using the id and then we add the card to the cards array
-    fun addCard(collection: CollectionModel, card: CardModel){
+    override fun addCard(collection: CollectionModel, card: CardModel){
         var foundCollection: CollectionModel? = collections.find { c -> c.id == collection.id }
         if (foundCollection != null) {
+            card.id = getNewCardId()
             foundCollection.cards.add(card)
-            logCollections()
+            logCards(foundCollection)
         }
     }
     // logs collections when a new collection is created
     fun logCollections() {
         collections.forEach{ i("$it") }
+    }
+    fun logCards(collection: CollectionModel){
+        collection.cards.forEach{i("$it")}
     }
 }

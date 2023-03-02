@@ -68,8 +68,9 @@ class CollectionActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.collections.findAll().size)
+                app.collections.findAllCards(collection)?.let { it1 ->
+                    (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, it1.size)
+                }
             }
         }
 }
