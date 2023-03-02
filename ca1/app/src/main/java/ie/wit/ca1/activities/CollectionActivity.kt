@@ -43,7 +43,7 @@ class CollectionActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
-                val launcherIntent = Intent(this, ""::class.java)
+                val launcherIntent = Intent(this, AddCardActivity::class.java)
                 getResult.launch(launcherIntent)
             }
         }

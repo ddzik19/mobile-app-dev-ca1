@@ -37,7 +37,7 @@ class CreateCollectionActivity : AppCompatActivity() {
                 R.layout.simple_spinner_item
             )
         adapter.setDropDownViewResource(R.layout.simple_spinner_item)
-        genreSpinner.adapter = adapter;
+        genreSpinner.adapter = adapter
 
         binding.addBtn.setOnClickListener {
             collection.title = binding.titleInput.text.toString()
@@ -58,7 +58,5 @@ class CreateCollectionActivity : AppCompatActivity() {
                     .show()
             }
         }
-
-
     }
 }
