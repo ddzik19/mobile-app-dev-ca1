@@ -16,6 +16,7 @@ import timber.log.Timber
 class AddCardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddCardBinding
     var card = CardModel()
+    var collection = CollectionModel()
     lateinit var app: MainApp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,15 +40,15 @@ class AddCardActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         raritySpinner.adapter = adapter
 
-        binding.addBtn.setOnClickListener {
+        binding.addCardBtn.setOnClickListener {
             card.cardName = binding.nameInput.text.toString()
             card.cardNumber = binding.cardNumberInput.text.toString()
             card.cardRarity = binding.raritySpinner.selectedItem.toString()
             card.isCollected = binding.isCollectedBtn.isChecked
 
             if (card.cardName.isNotEmpty() && card.cardRarity.isNotEmpty() && card.cardNumber.isNotEmpty()) {
-                app.collections.cards.create(card.copy())
-                Timber.i("Added new collection; ${collection.copy()}")
+                app.collections.addCard(collection.copy(), card.copy())
+                Timber.i("Added new card ${card.copy()} to ${collection.copy()}")
                 setResult(RESULT_OK)
                 finish()
             } else {

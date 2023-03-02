@@ -129,7 +129,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/addBtn"
+                    android:id="@+id/addCardBtn"
                     android:layout_width="108dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
