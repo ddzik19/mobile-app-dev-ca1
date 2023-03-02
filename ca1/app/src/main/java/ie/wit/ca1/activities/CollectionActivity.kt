@@ -21,7 +21,7 @@ import ie.wit.ca1.models.CardModel
 import ie.wit.ca1.models.CollectionModel
 import timber.log.Timber
 
-class CollectionActivity : AppCompatActivity() {
+class CollectionActivity : AppCompatActivity(), EditCardListener {
 
     private lateinit var binding: ActivityCollectionBinding
     var collection = CollectionModel()
@@ -43,9 +43,10 @@ class CollectionActivity : AppCompatActivity() {
             Timber.i("Collection: ${collection}")
         }
 
+
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = CardAdapter(app.collections.findAllCards(collection))
+        binding.recyclerView.adapter = CardAdapter(app.collections.findAllCards(collection), this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -74,8 +75,17 @@ class CollectionActivity : AppCompatActivity() {
             }
         }
 
+    // moves us to the edit activity for collection
+    override fun onCardEditClick(card: CardModel){
+        val launcherIntent = Intent(this, EditCardActivity::class.java)
+        launcherIntent.putExtra("edit_card", card)
+        getResult.launch(launcherIntent)
+    }
 
-class CardAdapter constructor(private var cards: List<CardModel>) :
+interface EditCardListener {
+    fun onCardEditClick(card: CardModel)
+}
+class CardAdapter constructor(private var cards: List<CardModel>, private val editListener: EditCardListener) :
     RecyclerView.Adapter<CardAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -87,7 +97,7 @@ class CardAdapter constructor(private var cards: List<CardModel>) :
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val card = cards[holder.adapterPosition]
-        holder.bind(card)
+        holder.bind(card, editListener)
     }
 
     override fun getItemCount(): Int = cards.size
@@ -102,8 +112,7 @@ class CardAdapter constructor(private var cards: List<CardModel>) :
             binding.cardNumber.text = "N: ${card.cardNumber}"
             binding.cardRarity.text = "R: ${card.cardRarity}"
             binding.isCollected.text = "C: ${card.isCollected}"
-//            binding.root.setOnClickListener{clickListener.onCollectionClick(collection)}
-//            binding.editBtn.setOnClickListener{editListener.onCollectionEditClick(collection)}
+            binding.editCardBtn.setOnClickListener{editListener.onCardEditClick(card)}
 //            binding.deleteBtn.setOnClickListener{deleteListener.onCollectionDeleteClick(collection)}
         }
     }
