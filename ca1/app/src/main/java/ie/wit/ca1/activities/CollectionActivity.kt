@@ -38,14 +38,14 @@ class CollectionActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        val layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = app.collections.findAllCards(collection)
-            ?.let { CardAdapter(it,) }
-
         if (intent.hasExtra("collection_activity")) {
             collection = intent.extras?.getParcelable("collection_activity")!!
+            Timber.i("Collection: ${collection}")
         }
+
+        val layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.adapter = CardAdapter(app.collections.findAllCards(collection))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -68,12 +68,12 @@ class CollectionActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                app.collections.findAllCards(collection)?.let { it1 ->
-                    (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, it1.size)
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.collections.findAllCards(collection).size)
                 }
             }
         }
-}
+
 
 class CardAdapter constructor(private var cards: List<CardModel>) :
     RecyclerView.Adapter<CardAdapter.MainHolder>() {

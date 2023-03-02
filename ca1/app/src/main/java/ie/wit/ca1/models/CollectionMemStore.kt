@@ -1,5 +1,6 @@
 package ie.wit.ca1.models
 
+import android.util.Log.i
 import timber.log.Timber.i
 import kotlin.random.Random
 
@@ -61,6 +62,7 @@ class CollectionMemStore: CollectionStore {
         if (foundCollection != null) {
             card.id = getNewCardId()
             foundCollection.cards.add(card)
+            logCollections()
             logCards(foundCollection)
         }
     }
