@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ie.wit.ca1.R
 import ie.wit.ca1.databinding.ActivityCollectionBinding
 import ie.wit.ca1.databinding.CardWidgetBinding
-import ie.wit.ca1.databinding.CollectionWidgetBinding
 import ie.wit.ca1.main.MainApp
 import ie.wit.ca1.models.CardModel
 import ie.wit.ca1.models.CollectionModel
@@ -73,7 +72,6 @@ class CollectionActivity : AppCompatActivity(), EditCardListener {
                 notifyItemRangeChanged(0,app.collections.findAllCards(collection).size)
                 }
             }
-        }
 
     // moves us to the edit activity for collection
     override fun onCardEditClick(card: CardModel){
@@ -81,6 +79,8 @@ class CollectionActivity : AppCompatActivity(), EditCardListener {
         launcherIntent.putExtra("edit_card", card)
         getResult.launch(launcherIntent)
     }
+}
+
 
 interface EditCardListener {
     fun onCardEditClick(card: CardModel)
@@ -107,7 +107,7 @@ class CardAdapter constructor(private var cards: List<CardModel>, private val ed
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(card: CardModel) {
+        fun bind(card: CardModel, editListener: EditCardListener) {
             binding.cardName.text = card.cardName
             binding.cardNumber.text = "N: ${card.cardNumber}"
             binding.cardRarity.text = "R: ${card.cardRarity}"
