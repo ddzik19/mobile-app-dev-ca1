@@ -61,5 +61,6 @@ class CreateCollectionActivity : AppCompatActivity() {
         binding.cancelBtn.setOnClickListener{
             finish()
         }
+
     }
 }

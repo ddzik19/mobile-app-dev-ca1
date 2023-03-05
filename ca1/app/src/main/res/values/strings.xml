@@ -1,3 +1,35 @@
 <resources>
     <string name="app_name">ca1</string>
+    <string name="ca1" />
+    <string name="add_btn_text">Add</string>
+    <string name="menu_addCollection">Add</string>
+    <string name="edit_btn_text">Edit</string>
+    <string name="delete_btn_text">Delete</string>
+    <string name="update_btn_text">Update</string>
+    <string name="card_name">Card Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="card_rarity">Card Rarity</string>
+    <string name="cancel_btn_text">Cancel</string>
+    <string name="card_type">Card Type</string>
+    <string-array name="rarities">
+        <item>Common</item>
+        <item>Uncommon</item>
+        <item>Rare</item>
+        <item>Extra Rare</item>
+        <item>Ultra Rare</item>
+        <item>Super Rare</item>
+        <item>Secret Rare</item>
+    </string-array>
+    <string-array name="types">
+        <item>Attack</item>
+        <item>Defense</item>
+        <item>Support</item>
+    </string-array>
+    <string-array name="genres">
+        <item>Pokemon</item>
+        <item>Yu-Gi-Oh</item>
+        <item>Match Attax</item>
+        <item>Fortnite</item>
+        <item>Minecraft</item>
+    </string-array>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ie.wit.ca1.activities.CreateCollectionActivity">
+    tools:context="ie.wit.ca1.activities.EditCollectionActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -87,19 +87,19 @@
                         android:layout_weight="1" />
 
                 </LinearLayout>
-                
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/addBtn"
+                        android:id="@+id/updateBtn"
+                        android:layout_marginRight="10dp"
                         android:layout_width="108dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="@string/add_btn_text" />
+                        android:text="@string/update_btn_text" />
 
                     <Button
                         android:id="@+id/cancelBtn"
@@ -108,8 +108,9 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/cancel_btn_text" />
                 </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
-
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
