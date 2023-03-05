@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ca1">
         <activity
+            android:name=".activities.EditCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddCardActivity"
             android:exported="false" />
         <activity

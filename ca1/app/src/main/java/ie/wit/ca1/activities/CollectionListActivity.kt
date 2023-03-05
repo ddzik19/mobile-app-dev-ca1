@@ -64,32 +64,32 @@ class CollectionListActivity : AppCompatActivity(),CollectionListener, EditListe
     override fun onCollectionClick(collection: CollectionModel) {
         val launcherIntent = Intent(this, CollectionActivity::class.java)
         launcherIntent.putExtra("collection_activity", collection)
-        getClickResult.launch(launcherIntent)
+        getResult.launch(launcherIntent)
     }
 
     // moves us to the edit activity for collection
     override fun onCollectionEditClick(collection: CollectionModel){
         val launcherIntent = Intent(this, EditCollectionActivity::class.java)
         launcherIntent.putExtra("edit_collection", collection)
-        getClickResult.launch(launcherIntent)
+        getResult.launch(launcherIntent)
     }
 
     override fun onCollectionDeleteClick(collection: CollectionModel){
         app.collections.delete(collection)
         val launcherIntent = Intent(this, CollectionListActivity::class.java)
-        getClickResult.launch(launcherIntent)
+        getResult.launch(launcherIntent)
     }
 
-    // checking if we can move to activity
-    private val getClickResult =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.collections.findAll().size)
-            }
-        }
+//    // checking if we can move to activity
+//    private val getClickResult =
+//        registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()
+//        ) {
+//            if (it.resultCode == Activity.RESULT_OK) {
+//                (binding.recyclerView.adapter)?.
+//                notifyItemRangeChanged(0,app.collections.findAll().size)
+//            }
+//        }
 }
 
 // edit button click

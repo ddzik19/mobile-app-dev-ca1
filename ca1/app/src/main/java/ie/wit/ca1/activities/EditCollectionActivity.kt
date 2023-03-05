@@ -37,15 +37,14 @@ class EditCollectionActivity : AppCompatActivity() {
         val adapter =
             ArrayAdapter.createFromResource(
                 this,
-                ie.wit.ca1.R.array.genres,
+                R.array.genres,
                 android.R.layout.simple_spinner_item
             )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
-        genreSpinner.adapter = adapter;
+        genreSpinner.adapter = adapter
 
         if (intent.hasExtra("edit_collection")) {
-            collection = intent.extras?.getParcelable("edit_collection")!!
-            binding.titleInput.setText(collection.title)
+            collection = intent.getParcelableExtra("edit_collection", CollectionModel::class.java)!!
         }
 
         binding.updateBtn.setOnClickListener {

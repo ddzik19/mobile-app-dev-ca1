@@ -1,5 +1,6 @@
 package ie.wit.ca1.models
 
+import android.util.Log.i
 import timber.log.Timber.i
 import kotlin.random.Random
 
@@ -22,11 +23,10 @@ class CollectionMemStore: CollectionStore {
     }
 
     // get all card from a specific collection
-    fun findAllCards(collection: CollectionModel): ArrayList<CardModel>? {
+    override fun findAllCards(collection: CollectionModel): List<CardModel> {
         var foundCollection: CollectionModel? = collections.find { c -> c.id == collection.id }
-
         if(foundCollection != null){
-            cards = foundCollection?.cards!!
+            cards = foundCollection.cards
         }
         return cards
     }
@@ -47,7 +47,7 @@ class CollectionMemStore: CollectionStore {
         }
     }
 
-    fun delete(collection: CollectionModel) {
+    override fun delete(collection: CollectionModel) {
         var foundCollection =  collections.indexOf(collection)
         if (foundCollection != null) {
             collections.removeAt(foundCollection)
@@ -55,17 +55,51 @@ class CollectionMemStore: CollectionStore {
         }
     }
 
-//    adding new card to the collection
-//    we find the collection using the id and then we add the card to the cards array
-    fun addCard(collection: CollectionModel, card: CardModel){
+    //    adding new card to the collection
+    //    we find the collection using the id and then we add the card to the cards array
+    override fun addCard(collection: CollectionModel, card: CardModel){
         var foundCollection: CollectionModel? = collections.find { c -> c.id == collection.id }
         if (foundCollection != null) {
+            card.id = getNewCardId()
             foundCollection.cards.add(card)
             logCollections()
+            logCards(foundCollection)
         }
     }
+
+    //    deleting card, finding card by index and removing it
+    override fun deleteCard(card: CardModel) {
+        var foundCollection: CollectionModel? = collections.find { c -> c.id == card.collectionId }
+        if (foundCollection != null) {
+            var c = foundCollection.cards.indexOf(card)
+            foundCollection.cards.removeAt(c)
+            logCollections()
+            logCards(foundCollection)
+        }
+    }
+
+    override fun updateCard(card: CardModel) {
+        var foundCollection: CollectionModel? = collections.find { c -> c.id == card.collectionId }
+        var foundCard: CardModel? = foundCollection?.cards?.find{ c -> c.id == card.id}
+        if (foundCollection != null) {
+            if (foundCard != null) {
+                foundCard.cardNumber = card.cardNumber
+                foundCard.cardName = card.cardName
+                foundCard.cardType = card.cardType
+                foundCard.cardRarity = card.cardRarity
+                foundCard.isCollected = card.isCollected
+                logCollections()
+                logCards(foundCollection)
+            }
+        }
+    }
+
     // logs collections when a new collection is created
-    fun logCollections() {
+    private fun logCollections() {
         collections.forEach{ i("$it") }
+    }
+    //    logging cards in current collection
+    private fun logCards(collection: CollectionModel){
+        collection.cards.forEach{i("$it")}
     }
 }
