@@ -38,13 +38,22 @@ class CollectionActivity : AppCompatActivity(), EditCardListener, DeleteCardList
         app = application as MainApp
 
         if (intent.hasExtra("collection_activity")) {
-            collection = intent.extras?.getParcelable("collection_activity")!!
+            collection = intent.getParcelableExtra("collection_activity", CollectionModel::class.java)!!
             Timber.i("Collection: $collection")
+        } else {
+            Timber.e("Error: no collection found in intent extras")
+            finish() // close the activity
+            return // stop executing further code in this method
         }
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = CardAdapter(app.collections.findAllCards(collection), this, this)
+
+        if (binding.recyclerView.adapter == null) {
+            Timber.e("Error: CardAdapter not set")
+            finish() // close the activity
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,6 +65,7 @@ class CollectionActivity : AppCompatActivity(), EditCardListener, DeleteCardList
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, AddCardActivity::class.java)
+                launcherIntent.putExtra("create_card_activity", collection)
                 getResult.launch(launcherIntent)
             }
         }
@@ -88,6 +98,7 @@ class CollectionActivity : AppCompatActivity(), EditCardListener, DeleteCardList
     override fun onCardDeleteClick(card: CardModel){
         app.collections.deleteCard(card)
         val launcherIntent = Intent(this, CollectionActivity::class.java)
+        launcherIntent.putExtra("collection_activity", collection)
         getResult.launch(launcherIntent)
     }
 }
