@@ -8,11 +8,15 @@ private var id = 0
 private var cardId = 0
 
 internal fun getNewId(): Int {
-    return id++
+    val randomNumber = Random.nextInt(0, 10000)
+    id = randomNumber
+    return id
 }
 
 internal fun getNewCardId(): Int {
-    return cardId++
+    val randomNumber = Random.nextInt(0, 10000)
+    cardId = randomNumber
+    return cardId
 }
 
 class CollectionMemStore : CollectionStore {

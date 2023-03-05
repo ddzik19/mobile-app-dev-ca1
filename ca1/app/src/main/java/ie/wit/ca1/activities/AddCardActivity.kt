@@ -30,6 +30,15 @@ class AddCardActivity : AppCompatActivity() {
         binding = ActivityAddCardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (intent.hasExtra("create_card_activity")) {
+            collection = intent.getParcelableExtra("create_card_activity", CollectionModel::class.java)!!
+            Timber.i("Collection: $collection")
+        } else {
+            Timber.e("Error: no collection found in intent extras")
+            finish() // close the activity
+            return // stop executing further code in this method
+        }
+
         val typeSpinner = findViewById<Spinner>(R.id.typeSpinner)
         val adapter =
             ArrayAdapter.createFromResource(

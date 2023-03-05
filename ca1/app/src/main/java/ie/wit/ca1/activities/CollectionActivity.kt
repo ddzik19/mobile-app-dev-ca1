@@ -65,6 +65,7 @@ class CollectionActivity : AppCompatActivity(), EditCardListener, DeleteCardList
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, AddCardActivity::class.java)
+                launcherIntent.putExtra("create_card_activity", collection)
                 getResult.launch(launcherIntent)
             }
         }
