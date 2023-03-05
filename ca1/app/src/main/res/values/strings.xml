@@ -9,6 +9,7 @@
     <string name="card_name">Card Name</string>
     <string name="card_number">Card Number</string>
     <string name="card_rarity">Card Rarity</string>
+    <string name="cancel_btn_text">Cancel</string>
     <string name="card_type">Card Type</string>
     <string-array name="rarities">
         <item>Common</item>

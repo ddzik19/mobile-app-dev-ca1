@@ -78,6 +78,11 @@ class EditCardActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        // cancel current activity and move to the previous activity
+        binding.canceldBtn.setOnClickListener{
+            finish()
+        }
     }
 
     private fun getIndex(spinner: Spinner, value: String): Int {

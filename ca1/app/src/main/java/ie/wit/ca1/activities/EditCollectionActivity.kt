@@ -76,5 +76,8 @@ class EditCollectionActivity : AppCompatActivity() {
                 finish()
             }
         }
+        binding.cancelBtn.setOnClickListener{
+            finish()
+        }
     }
 }
