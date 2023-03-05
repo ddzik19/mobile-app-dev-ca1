@@ -1,20 +1,21 @@
 package ie.wit.ca1.models
 
-import android.util.Log.i
-import timber.log.Timber.i
+import android.util.Log
+import timber.log.Timber
 import kotlin.random.Random
 
-var id = 0
-var cardId = 0
+private var id = 0
+private var cardId = 0
+
 internal fun getNewId(): Int {
-    return id ++
+    return id++
 }
 
 internal fun getNewCardId(): Int {
-    return cardId ++
+    return cardId++
 }
 
-class CollectionMemStore: CollectionStore {
+class CollectionMemStore : CollectionStore {
     val collections = ArrayList<CollectionModel>()
     var cards = ArrayList<CardModel>()
     // returning all collections
@@ -30,8 +31,6 @@ class CollectionMemStore: CollectionStore {
         }
         return cards
     }
-
-    // creating/adding new collections
     override fun create(collection: CollectionModel) {
         collection.id = getNewId()
         collections.add(collection)
@@ -39,67 +38,51 @@ class CollectionMemStore: CollectionStore {
     }
 
     override fun update(collection: CollectionModel) {
-        var foundCollection: CollectionModel? = collections.find { c -> c.id == collection.id }
-        if (foundCollection != null) {
-            foundCollection.title = collection.title
-            foundCollection.genre = collection.genre
+        collections.find { it.id == collection.id }?.apply {
+            title = collection.title
+            genre = collection.genre
             logCollections()
         }
     }
 
     override fun delete(collection: CollectionModel) {
-        var foundCollection =  collections.indexOf(collection)
-        if (foundCollection != null) {
-            collections.removeAt(foundCollection)
-            logCollections()
-        }
+        collections.remove(collection)
+        logCollections()
     }
 
-    //    adding new card to the collection
-    //    we find the collection using the id and then we add the card to the cards array
-    override fun addCard(collection: CollectionModel, card: CardModel){
-        var foundCollection: CollectionModel? = collections.find { c -> c.id == collection.id }
-        if (foundCollection != null) {
+    override fun addCard(collection: CollectionModel, card: CardModel) {
+        collections.find { it.id == collection.id }?.let {
             card.id = getNewCardId()
-            foundCollection.cards.add(card)
-            logCollections()
-            logCards(foundCollection)
+            it.cards.add(card)
+            logCards(it)
         }
     }
 
-    //    deleting card, finding card by index and removing it
     override fun deleteCard(card: CardModel) {
-        var foundCollection: CollectionModel? = collections.find { c -> c.id == card.collectionId }
-        if (foundCollection != null) {
-            var c = foundCollection.cards.indexOf(card)
-            foundCollection.cards.removeAt(c)
-            logCollections()
-            logCards(foundCollection)
+        collections.find { it.id == card.collectionId }?.let {
+            it.cards.remove(card)
+            logCards(it)
         }
     }
 
     override fun updateCard(card: CardModel) {
-        var foundCollection: CollectionModel? = collections.find { c -> c.id == card.collectionId }
-        var foundCard: CardModel? = foundCollection?.cards?.find{ c -> c.id == card.id}
-        if (foundCollection != null) {
-            if (foundCard != null) {
-                foundCard.cardNumber = card.cardNumber
-                foundCard.cardName = card.cardName
-                foundCard.cardType = card.cardType
-                foundCard.cardRarity = card.cardRarity
-                foundCard.isCollected = card.isCollected
-                logCollections()
-                logCards(foundCollection)
-            }
+        collections.find { it.id == card.collectionId }?.cards?.find { it.id == card.id }?.apply {
+            cardNumber = card.cardNumber
+            cardName = card.cardName
+            cardType = card.cardType
+            cardRarity = card.cardRarity
+            isCollected = card.isCollected
+        }
+        collections.find { it.id == card.collectionId }?.let {
+            logCards(it)
         }
     }
 
-    // logs collections when a new collection is created
     private fun logCollections() {
-        collections.forEach{ i("$it") }
+        collections.forEach { Timber.i("$it") }
     }
-    //    logging cards in current collection
-    private fun logCards(collection: CollectionModel){
-        collection.cards.forEach{i("$it")}
+
+    private fun logCards(collection: CollectionModel) {
+        collection.cards.forEach { Timber.i("$it") }
     }
 }

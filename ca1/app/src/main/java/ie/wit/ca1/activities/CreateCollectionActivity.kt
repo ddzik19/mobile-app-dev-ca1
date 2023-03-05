@@ -1,6 +1,6 @@
 package ie.wit.ca1.activities
 
-import android.R
+import ie.wit.ca1.R
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -33,10 +33,10 @@ class CreateCollectionActivity : AppCompatActivity() {
         val adapter =
             ArrayAdapter.createFromResource(
                 this,
-                ie.wit.ca1.R.array.genres,
-                R.layout.simple_spinner_item
+                R.array.genres,
+                android.R.layout.simple_spinner_item
             )
-        adapter.setDropDownViewResource(R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         genreSpinner.adapter = adapter
 
         binding.addBtn.setOnClickListener {
