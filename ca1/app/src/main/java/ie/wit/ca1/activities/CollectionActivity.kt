@@ -20,7 +20,7 @@ import ie.wit.ca1.models.CardModel
 import ie.wit.ca1.models.CollectionModel
 import timber.log.Timber
 
-class CollectionActivity : AppCompatActivity(), EditCardListener {
+class CollectionActivity : AppCompatActivity(), EditCardListener, DeleteCardListener {
 
     private lateinit var binding: ActivityCollectionBinding
     var collection = CollectionModel()
@@ -39,13 +39,12 @@ class CollectionActivity : AppCompatActivity(), EditCardListener {
 
         if (intent.hasExtra("collection_activity")) {
             collection = intent.extras?.getParcelable("collection_activity")!!
-            Timber.i("Collection: ${collection}")
+            Timber.i("Collection: $collection")
         }
-
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = CardAdapter(app.collections.findAllCards(collection), this)
+        binding.recyclerView.adapter = CardAdapter(app.collections.findAllCards(collection), this, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,6 +56,12 @@ class CollectionActivity : AppCompatActivity(), EditCardListener {
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, AddCardActivity::class.java)
+                getResult.launch(launcherIntent)
+            }
+        }
+        when (item.itemId){
+            R.id.goBackBtn -> {
+                val launcherIntent = Intent(this, CollectionListActivity::class.java)
                 getResult.launch(launcherIntent)
             }
         }
@@ -79,13 +84,23 @@ class CollectionActivity : AppCompatActivity(), EditCardListener {
         launcherIntent.putExtra("edit_card", card)
         getResult.launch(launcherIntent)
     }
+
+    override fun onCardDeleteClick(card: CardModel){
+        app.collections.deleteCard(card)
+        val launcherIntent = Intent(this, CollectionActivity::class.java)
+        getResult.launch(launcherIntent)
+    }
 }
 
 
 interface EditCardListener {
     fun onCardEditClick(card: CardModel)
 }
-class CardAdapter constructor(private var cards: List<CardModel>, private val editListener: EditCardListener) :
+
+interface DeleteCardListener {
+    fun onCardDeleteClick(card: CardModel)
+}
+class CardAdapter constructor(private var cards: List<CardModel>, private val editListener: EditCardListener, private val deleteListener: DeleteCardListener) :
     RecyclerView.Adapter<CardAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -97,7 +112,7 @@ class CardAdapter constructor(private var cards: List<CardModel>, private val ed
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val card = cards[holder.adapterPosition]
-        holder.bind(card, editListener)
+        holder.bind(card, editListener, deleteListener)
     }
 
     override fun getItemCount(): Int = cards.size
@@ -107,13 +122,18 @@ class CardAdapter constructor(private var cards: List<CardModel>, private val ed
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bind(card: CardModel, editListener: EditCardListener) {
+        fun bind(
+            card: CardModel,
+            editListener: EditCardListener,
+            deleteListener: DeleteCardListener
+        ) {
             binding.cardName.text = card.cardName
             binding.cardNumber.text = "N: ${card.cardNumber}"
             binding.cardRarity.text = "R: ${card.cardRarity}"
             binding.isCollected.text = "C: ${card.isCollected}"
+            binding.cardType.text = "T: ${card.cardType}"
             binding.editCardBtn.setOnClickListener{editListener.onCardEditClick(card)}
-//            binding.deleteBtn.setOnClickListener{deleteListener.onCollectionDeleteClick(collection)}
+            binding.deleteCardBtn.setOnClickListener{deleteListener.onCardDeleteClick(card)}
         }
     }
 }

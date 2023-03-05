@@ -27,23 +27,34 @@ class AddCardActivity : AppCompatActivity() {
 
         app = application as MainApp
         binding = ActivityAddCardBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
-        val raritySpinner = findViewById<Spinner>(ie.wit.ca1.R.id.raritySpinner)
+        val typeSpinner = findViewById<Spinner>(ie.wit.ca1.R.id.typeSpinner)
         val adapter =
             ArrayAdapter.createFromResource(
                 this,
-                ie.wit.ca1.R.array.rarities,
+                R.array.types,
                 android.R.layout.simple_spinner_item
             )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
-        raritySpinner.adapter = adapter
+        typeSpinner.adapter = adapter
+
+        val raritySpinner = findViewById<Spinner>(ie.wit.ca1.R.id.raritySpinner)
+        val adapter2 =
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.rarities,
+                android.R.layout.simple_spinner_item
+            )
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_item)
+        raritySpinner.adapter = adapter2
 
         binding.addCardBtn.setOnClickListener {
             card.cardName = binding.nameInput.text.toString()
             card.cardNumber = binding.cardNumberInput.text.toString()
             card.cardRarity = binding.raritySpinner.selectedItem.toString()
+            card.cardType = binding.typeSpinner.selectedItem.toString()
+            card.collectionId = collection.id
             card.isCollected = binding.isCollectedBtn.isChecked
 
             if (card.cardName.isNotEmpty() && card.cardRarity.isNotEmpty() && card.cardNumber.isNotEmpty()) {

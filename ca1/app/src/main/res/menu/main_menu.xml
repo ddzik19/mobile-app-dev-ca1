@@ -4,7 +4,7 @@
 
     <item
         android:icon="?attr/actionModeCloseDrawable"
-        android:id="@+id/go_back_btn"
+        android:id="@+id/goBackBtn"
         app:showAsAction="always" />
     <item
         android:id="@+id/item_add"
